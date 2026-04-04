@@ -1,0 +1,92 @@
+{% extends 'farmer/account.html' %}
+
+
+{% block content %}
+
+<h3 class="title-divider" style="margin-bottom: 0;"><span> My Products Inventory</span> </h3>
+<div class="lead" style="margin-bottom: 40px;">
+      <table  class=" table table-striped table-hover  " >
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    S/N
+                </th>
+                <th>
+                    Catgeory
+                </th>
+                <th>
+                    Product
+                </th>
+                <th>Location</th>
+                <th>
+                Quantity
+                </th>
+                <th>
+                Measurement
+                </th>
+                <th>
+                    Amount
+                </th>
+                <th>
+                    Shipping Within State
+                </th>
+            
+                
+            </tr>
+        </thead>
+    
+        {% for x in object %}
+    
+        <tr {% if x.is_active %} style="color: green;" {% else %} style="color: red;" {% endif %} >
+            <td>
+                {{ x.pk }}
+            </td>
+            <td>
+                {{ x.product_catgeory }}
+            </td>
+            <td>
+                {{x.product_name}}
+            </td>
+            <td>
+                {{x.store_location}}
+            </td>
+            <td>
+                {{x.measurment}}
+            </td>
+            <td>
+                {{x.quantity}}
+            </td>
+            <td>
+                {{ x.price }}
+            </td>
+            <td>
+                {{x.intra_state_shipping_fee }}
+            </td>
+            <td>
+                <a href="{% url 'updateproducts' x.pk %} "> Edit ?</a>
+            </td>
+           
+        </tr>
+    
+    {% endfor %}
+    </table>
+
+    <button> <a href=" {% url 'newproducts' %} ">Add New Product </a></button>
+</div>
+
+
+
+
+
+
+
+
+ 
+</div>
+</div>
+
+
+
+
+
+{% endblock %}

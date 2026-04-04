@@ -1,0 +1,79 @@
+{% load static %}
+{% load crispy_forms_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head lang="en">
+    <title>Log in to your account &mdash; AgroServe &mdash; </title>
+    <meta charset="utf-8">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="viewport" content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
+        <meta name="robots" content="noindex, follow">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href=" {% static 'site.css' %}">
+
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+ 
+    <link rel="shortcut icon" sizes="76x76"      href="{% static 'build/vatagro/76x76.png' %}    ">
+    <link rel="shortcut icon" sizes="120x120"    href="{% static 'build/vatagro/120x120.png' %}  ">
+    <link rel="shortcut icon" sizes="128x128"    href="{% static 'build/vatagro/128x128.png' %}  ">
+    <link rel="shortcut icon" sizes="152x152"    href="{% static 'build/vatagro/152x152.png' %}  ">
+    <link rel="shortcut icon" sizes="196x196"    href="{% static 'build/vatagro/196x196.png' %} ">
+    <link rel="shortcut icon" sizes="256x256"    href="{% static 'build/vatagro/256x256.png' %} ">
+
+    <link rel="apple-touch-icon" sizes="76x76"   href="{% static 'build/vatagro/76x76.png' %}  ">
+    <link rel="apple-touch-icon" sizes="120x120" href="{% static 'build/vatagro/120x120.png' %} ">
+    <link rel="apple-touch-icon" sizes="128x128" href="{% static 'build/vatagro/128x128.png' %} ">
+    <link rel="apple-touch-icon" sizes="152x152" href="{% static 'build/vatagro/152x152.png' %} ">
+    <link rel="apple-touch-icon" sizes="196x196" href="{% static 'build/vatagro/196x196.png' %} ">
+    <link rel="apple-touch-icon" sizes="256x256" href="{% static 'build/vatagro/256x256.png' %} ">
+
+    <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="AgroServe activity feed" />
+                     <!-- Remove this block on the server -->
+     <style>
+        .auth-bg {
+            background: url('{% static "images/auth.jpg" %}'),hsl(0deg 0% 96%) no-repeat;
+            background-size: cover;
+        }
+    </style> 
+    <!--  Remove this on the server  -->
+</head>
+<body>
+<div class="container-fluid auth-bg">
+    <div class="row">
+        <div class="col-lg-15 p-0 justify-content-center d-flex">
+            <form class="min-vh-100 w-75 p-0 d-flex flex-column justify-content-center" action="{% url 'register'   %}" method='POST'>
+                {% csrf_token %}
+                <div><a class="navbar-brand text-left" href="index.html">
+                    <span class="sr-only">AgroServe</span>
+                    <img src=" {%    static 'logo/VatAgro-2.png' %}" class=""
+                         style="width: 150px; padding: 8px 5px; border-radius: 4px" alt="vatagro Logo">
+                </a>
+                    <h3 class="font-weight-bold my-3">Register With Us</h3>
+
+                    <div class="form-group">  
+                        {{ form }}
+
+                    </div>
+                    <div class="form-group">
+                                                <a class="text-right d-block" href="forgot-password.html">Forgot Password?</a>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Register</button>
+                        <a class="d-block" href="login.html">Login in</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-lg-15 d-none d-lg-block p-0">
+            <img class="img-fluid" src="{% static 'images/HET8841.jpg' %}" />
+        </div>
+    </div>
+</div><script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
+<script src="{% static 'site.bundle.js' %}"></script>
+</body>
+</html>

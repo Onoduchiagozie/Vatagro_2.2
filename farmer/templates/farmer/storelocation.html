@@ -1,0 +1,13 @@
+{% extends 'farmer/account.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h3 class="title-divider" style="margin-bottom: 0;"><span>Store Location</span></h3>
+<div class="lead" style="margin-bottom: 40px;">
+    <form method="post">{% csrf_token %}
+        <!-- {{ form|crispy }} -->
+        <input type="submit" value="Update">
+    </form>
+</div>
+
+{% endblock %}

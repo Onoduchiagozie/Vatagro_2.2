@@ -1,0 +1,70 @@
+{% extends 'farmer/account.html' %}
+
+
+{% block content %}
+
+<h3 class="title-divider" style="margin-bottom: 0;"><span> MY SHIPPING ADDRESS </span> </h3>
+<div class="lead" style="margin-bottom: 40px;">
+      <table  class=" table table-striped table-hover  " >
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    State
+                </th>
+                <th>
+                    City
+                </th>
+                <th>Address</th>
+                <th>
+                    Phone
+                </th>
+                <th>
+                    Update
+                </th>
+                
+            </tr>
+        </thead>
+    
+        {% for x in object %}
+    
+        <tr>
+            <td>
+                {{x.state}}
+            </td>
+            <td>
+                {{x.city}}
+            </td>
+            <td>
+                {{x.address}}
+            </td>
+            <td>
+                {{x.phone}}
+            </td>
+            <td>
+                <a href="{% url 'shippingaddress' x.pk %} "> Edit ?</a>
+            </td>
+           
+        </tr>
+    
+    {% endfor %}
+    </table>
+
+    <button> <a href=" {% url 'newshippingaddress' %} ">Add New Address </a></button>
+</div>
+
+
+
+
+
+
+
+
+ 
+</div>
+</div>
+
+
+
+
+
+{% endblock %}

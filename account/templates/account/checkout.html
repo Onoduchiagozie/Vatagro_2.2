@@ -1,0 +1,143 @@
+{% extends 'account/index.html' %}
+{% load static %}
+
+{% block content %}
+
+ <div class="container py-5" style="background: #eeefff">
+    <div class="row justify-content-around">
+        <div class="col-lg-26"><h1 class="display-3 mb-4">Checkout</h1></div>
+        <div class="col-lg-12">
+            <div class="mb-4">
+                <h3 class="t-14 text-black-50">SHIPPING DETAILS</h3>
+                <!-- NOTE TO SELF although sa FK it already refrences the whole instance -->
+                {% if request.user.is_authenticated %}
+
+                        {% if address.Active_Shipping_Address %}
+                                            {{address.Active_Shipping_Address}} <br>
+                                            {{address.Active_Shipping_Address.city}}, {{address.Active_Shipping_Address.state}} State <br>
+                                            {{address.Active_Shipping_Address.phone}} <br>
+                                            <a href="{% url 'newshippingaddress' %}"><p> Add New Shipping Address ? </p></a>
+
+                        {% else %}
+                                <a href="{% url 'profile' request.user.id %}"><p> You Need To Select A Shipping Address </p></a>
+                        {% endif %}
+                {% else %}
+                        <p>Kindly Login or Register to complete your ordering process</p>
+                        <a class="btn btn-primary" href="{% url 'login' %} ">Sign In</a>
+                {% endif %}
+                <input class="btn btn-primary"  href="" disabled="true" type="submit" id="submitBtn" value="place order" >
+
+                <form method="post" data-ajax="true" data-ajax-method="post" action="" data-ajax-success="paySuccess" data-ajax-failure="payFail" data-ajax-confirm="Your are being redirected to the payment website." >
+                    <hr>
+                    {% csrf_token %}
+                    <p style="color:red"><input id="chkRead" type="checkbox" name="chkRead" onchange="document.getElementById('submitBtn').disabled=!this.checked;">  Accept Disclaimer </p>
+                    <i style="color:red">
+                        Vatagro operates a safe and secured e-commerce platform and is in no way affiliated to the merchants and delivery of products. Every transaction in this
+                         marketplace is solely between the merchants and consumers.
+                    </i>
+
+            </form>
+
+
+
+            </div>
+
+        </div>
+        <div class="col-lg-12">
+            {% if not cart_items %}
+            <h2  style="color: green;">Your Shopping Cart Is Empty </h2>
+            <a class="text-right d-block mb-3" href="{% url 'home' %} "> Continue Shopping →</a>
+
+              {% else %}
+            <h3 class="t-14 text-black-50">YOUR ORDER</h3>
+            <hr>
+            <table class="table font-weight-bold table-borderless">
+                <tbody>
+                {% for cart_item in cart_items %}
+                    <tr class="product border-bottom">
+                        <td colspan="20%" class="d-flex">
+                            <img src="{{cart_item.product.prod_image.url}} " alt="" style="width: 50px; height: 50px">
+
+                            <span class="mini-details px-2">
+                                <span>{{cart_item.product.product_name}} </span>
+                                <span class="d-block t-12 text-black-50 text-uppercase font-weight-normal">Seller {{cart_item.product.farmername}} </span>
+                            </span>
+                        </td>
+                        <td colspan="20%" class="text-center" style="vertical-align: middle">
+                            <span class="border p-1 mb-1">{{cart_item.quantity}} </span>
+                            <span class="d-block t-12 text-black-50 text-uppercase font-weight-normal">Quantity</span>
+                        </td>
+                        <td colspan="20%" class="text-center" style="vertical-align: middle">
+                            <span class="border p-1 mb-1">₦ {{cart_item.product.price}} </span>
+                            <span class="d-block t-12 text-black-50 text-uppercase afont-weight-normal">Price</span>
+                        </td>
+
+                        <td colspan="20%" class="text-center" style="vertical-align: middle">
+                            {% if address.Active_Shipping_Address.state == cart_item.product.store_location.states %}
+                            <span class="border p-1 mb-1">₦{{cart_item.product.intra_state_shipping_fee }} </span>
+                            {% else %}
+                            <span class="border p-1 mb-1">₦{{cart_item.product.inter_state_shipping_fee }} </span>
+                            {% endif %}
+                            <span class="d-block t-12 text-black-50 text-uppercase font-weight-normal">Shipping</span>
+                        </td>
+
+                        <td colspan="20%" class="text-center" style="vertical-align: middle">
+                            <span class="border p-1 mb-1">₦{{cart_item.sub_total}} </span>
+                            <span class="d-block t-12 text-black-50 text-uppercase font-weight-normal">Sub-Total</span>
+                        </td>
+
+
+                        <td class="text-center" >
+                            <a class="" href="{% url 'removecart' cart_item.product.pk %} " >
+                                <i class="fa fa-minus" aria-hidden="true" style="height: 20px; width: 20;" ></i>
+                            </a>
+                        </td>
+
+
+
+                         <td class="text-center">
+                            {% if cart_item.quantity > cart_item.product.stock %} <p style="font-size: x-small;" > Available Stock Limit Exceeded</p>
+                                 <a href="" >
+                                </a> 
+                                {% else %}
+                                <a href="{% url 'addcart' cart_item.product.pk %} "><i class="fa fa-plus" aria-hidden="true"></i>
+                                </a> 
+                                {% endif %}       
+                            </td>
+
+                    </tr>
+
+                    {% endfor %}
+                </tbody>
+
+
+                <tfoot class="border-bottom">
+                    <tr>
+                        <td colspan="50%" class="border-0 py-0">Shipping</td>
+                        <td colspan="50%" class="text-right border-0 py-0">₦{{shipping_total}} </td>
+                    </tr>
+      
+                    <tr>
+                        <td colspan="50%" class="border-0 py-0">VAT</td>
+                        <td colspan="50%" class="text-right border-0 py-0">₦{{tax}} </td>
+                    </tr>
+
+                    <tr class="pb-3">
+                        <td colspan="50%" class="border-0 py-0">Total</td>
+                        <td colspan="50%" class="text-right border-0 py-0"> ₦ {{grand_total}}  </td>
+                    </tr>
+                </tfoot>
+
+            </table>
+            <a style="background-color: darkred; color: wheat;text-align: center" class="btn btn-block" href="{% url 'clearcart'%} ">Clear Shopping Cart</a>
+            {% endif %}
+        </div>
+
+    </div>
+</div>
+
+
+<script src="https://js.stripe.com/v3/"></script>
+
+<script src="{% static 'main.js' %} "></script>
+{% endblock %}

@@ -1,0 +1,171 @@
+{% extends 'account/index.html' %}
+{% load static %}
+<!-- <script>
+    if (nToastNotify) {
+        nToastNotify.init({
+            firstLoadEvent: 'DOMContentLoaded',
+            messages: [{"message":"You do not have any product in your cart","options":{"title":"Warning","type":"warning"}}],
+            responseHeaderKey: 'X-NToastNotify-Messages',
+            requestHeaderKey: 'X-Requested-With',
+            libraryDetails:{"varName":"toastr","scriptSrc":"https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js","styleHref":"https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css","options":{"extendedTimeOut":0,"positionClass":"toast-top-right","timeOut":4000,"progressBar":true,"closeButton":true,"type":"success"}},
+            disableAjaxToasts:false
+        });
+    };
+</script> -->
+{% block title %} Vatagro | Category Detail{% endblock %} 
+{% block content %}
+
+<div style="background: #eeefff">
+    <section class="py-5" >
+        <div class="container bg-white p-4">
+            <div class="summary owl-carousel owl-theme"
+                 data-autoplay="true"
+                 data-carousel="true"
+                 data-dots="true"
+                 data-loop="true"
+                 data-mouse-drag="true"
+                 data-nav="false"
+                 data-responsive='{"0": {"margin": 0, "items": 1},"600":{"margin": 0, "items": 1},"1000":{"items":1, "margin": 0}}'>
+                <img alt="" class="img-fluid" src="{% static 'promo_banner.jpg' %}">
+                <img alt="" class="img-fluid" src="{% static 'promo_banner.jpg' %}">
+                <img alt="" class="img-fluid" src="{% static 'promo_banner.jpg' %}">
+                <img alt="" class="img-fluid" src="{% static 'promo_banner.jpg' %}">
+                <img alt="" class="img-fluid" src="{% static 'promo_banner.jpg' %}">       
+            </div>
+        </div>
+    </section>
+
+    
+    <section class="container py-4" >
+        <div class="row justify-content-between">
+            <div class="col bg-white px-4" >
+                <div class=" py-4" >
+                    <h6 class="text-uppercase pt-4 font-weight-normal">Category</h6>
+                    <nav class="nav flex-column">
+                        {% for x in cat %}
+                                <a class="nav-link py-0 px-0 active" href="{% url 'category' x.pk %}">{{x.category_name}}</a>
+                            {% endfor %}
+                    </nav>
+
+                    <h6 class="text-uppercase pt-4 font-weight-normal">Location</h6>
+                    <nav class="nav flex-column">
+                        {% for x in  store_state_list %}
+                                <a class="nav-link py-0 px-0 active" href="{% url 'category2' x.pk %} ">{{x.states}} </a>
+                           {% endfor %}  
+                    </nav>
+                </div>
+            </div>
+            <div class="col-lg-24 bg-white py-4">
+                <div class="row justify-content-between">
+                    {% if main.category_name %}
+                    <h2 class="col"> {{main.category_name}}  </h2>
+                    {% else %}
+                    <h2 class="col"> Products in {{state_name.states}} State  </h2>
+                    {% endif %}
+                </div>
+
+                <hr />
+                <div class="row justify-content-between">
+                    <div class="col">
+                        <span> {{prod_found}} Products Found</span>
+                    </div>
+
+                    <div class="col text-right">
+                        <a class="btn p-0" href="#">
+                            <span class="sr-only">
+                            </span>
+                            <img alt="" src="{% static 'hes.jpg' %} " style="width:16px">
+                        </a><a class="btn p-0" href="#">
+                            <span class="sr-only">
+                                grid
+                            </span>
+                            <img alt="" src="{% static 'hes.jpg' %}" style="width:16px">
+                        </a>
+                    </div>
+
+
+                </div>
+                <div class="col-lg-30">
+                </div>
+
+                <!--            <hr/>-->
+                <div class="row">
+                                      {% for x in prod_cat %}
+
+                        <div class="col-lg-7">
+                           <div class="deal mb-3">
+                             <a href="{% url 'product_details' x.pk %}">
+                                <img src="{{ x.prod_image.url }}" class="img-fluid"
+                                     alt="{{ x.product_name }} "
+                                     height="421" width="590" />
+                                <div class="row">
+                                   
+                                    <div class="col-lg-15">
+                                        
+                                        <h4 class="product_title t-12 my-1 font-weight-bold"> {{ x.product_name }}</h4>
+                                        <p class="price bargain m-0 font-weight-bold t-14 text-vatagro-green"> ₦{{x.price}}</p>  
+                                        <p class="price is_old m-0 font-weight-bold text-vatagro-brown t-14"
+                                            style="text-decoration: line-through">₦7,250</p>
+                                    </div>
+
+                                    <div class="col-lg-15">
+                                        <h4 class="product_title t-12 my-1 font-weight-bold">Merchant <span>{{x.farmername}} </span></h4>
+                                        <h4 class="product_title t-14 my-1 text-vatagro-green font-weight-bold"> {{x.store_location.states}} State</h4>
+
+                                    </div>
+
+                                   
+                                </div>
+</a>
+                            </div>
+                        
+                           
+                       
+                        </div>
+                        {% endfor %}
+                        <!-- <div class="col-lg-7">
+                           <div class="deal mb-3">
+                             <a href="../Details/XBMLijtcUM8%3d.html">
+                                <img src="../../Vatimages/rice.jpg" class="img-fluid"
+                                     alt="Rice"
+                                     height="421" width="590" />
+
+                                <div class="row">
+                                   
+                                    <div class="col-lg-15">
+                                        <h4 class="product_title t-12 my-1 font-weight-bold">Rice</h4>
+
+                                        <p class="price bargain m-0 font-weight-bold t-14 text-vatagro-green"> ₦35,000</p>
+                                        <p class="price is_old m-0 font-weight-bold text-vatagro-brown t-14"
+                                            style="text-decoration: line-through">₦50,750</p>
+                                    </div>
+
+                                    <div class="col-lg-15">
+                                        <h4 class="product_title t-12 my-1 font-weight-bold">Merchant Jojo</h4>
+                                        <h4 class="product_title t-14 my-1 text-vatagro-green font-weight-bold">KADUNA State</h4>
+
+                                    </div>
+
+                                   
+                                </div>
+</a>
+                            </div>
+                        
+                           
+                       
+                        </div> -->
+
+                    </div>
+
+                    </div>
+        </div>
+    </section>
+
+</div>
+
+
+
+
+        
+
+{% endblock %}

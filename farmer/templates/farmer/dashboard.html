@@ -1,0 +1,171 @@
+{% extends 'farmer/account.html' %}
+{% load crispy_forms_tags %}
+
+{% block additionalcss %}  
+
+<style>
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+}
+.card-title {
+  margin-bottom: 0.5rem;
+}
+.card-footer {
+  padding: 0.5rem 1rem;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-top: 1px solid rgba(0, 0, 0, 0.125);
+}
+.card-header {
+  padding: 0.5rem 1rem;
+  margin-bottom: 0;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+#mom{
+    width: 100%;
+}
+
+.baby{ 
+    text-align: center;
+    float: left;
+    position: relative;
+    width: 26.67%; 
+    margin-left: 5% ;
+}
+
+#baby1{
+    background-color: red;
+}
+
+#baby2{
+    background-color: blue;
+}
+
+#baby3{
+    background-color: yellow;
+}
+</style>
+
+{% endblock%}
+
+{% block content %}
+
+
+<div id="mom">
+
+    <div class="baby" id="baby1" >
+        <div class="card text-center">
+            <div class="card-header">
+            Purchases
+            </div>
+            <div class="card-body">
+              <p class="card-text"><br>  <strong  style="font-size: 40px;">{{year}} </strong> <br><br> @ ₦{{total_year}}</p>
+            </div>
+            <div class="card-footer text-muted">
+              past 365 days 
+            </div>
+          </div> 
+    </div>
+
+    <div class="baby" id="baby1" >
+        <div class="card text-center">
+            <div class="card-header" style="color: green">
+              Purchases            </div>
+            <div class="card-body">
+                <p class="card-text" ><br> <strong  style="font-size: 40px;">{{month}} </strong><br><br> @ ₦{{ total_month }}</p>
+            </div>
+            <div class="card-footer text-muted">
+              past 30 days 
+            </div>
+          </div> 
+    </div>
+
+    
+    <div class="baby" id="baby1" >
+        <div class="card text-center">
+            <div class="card-header">
+             Purchases
+            </div>
+            <div class="card-body">
+                <p class="card-text"><br> <strong  style="font-size: 40px;">{{week}} </strong><br><br> @ ₦{{total_week}} </p>
+            </div>
+            <div class="card-footer text-muted">
+              past 7 days 
+            </div>
+          </div> 
+    </div>
+
+    </div>
+
+
+
+
+
+    
+    {% if request.user.is_staff %}
+
+<h2>Products Sold</h2>
+    <div id="mom" >
+
+      <div class="baby" id="baby1" >
+          <div class="card text-center" >
+              <div class="card-header" >
+              Fulfiled Orders
+              </div>
+              <div class="card-body">
+                <p class="card-text"><br>
+
+                    <strong  style="font-size: 40px;">
+                      {{fulfiled}}
+                    </strong>
+                    
+                    <br><br> @ ₦{{fop}} </p>
+              </div>
+              <div class="card-footer text-muted">
+                <!-- past 365 days  -->
+              </div>
+            </div> 
+      </div>
+  
+      <div class="baby" id="baby1" >
+          <div class="card text-center">
+              <div class="card-header">
+               UnFulfiled Orders
+              </div>
+              <div class="card-body">
+                 <a href="{% url 'purchasedproducts' %} "> <p class="card-text" ><br> <strong  style="font-size: 40px;">{{unful}} </strong><br><br> @ ₦{{ uop }}</p></a>
+              </div>
+              <div class="card-footer text-muted">
+                <!-- past 30 days  -->
+              </div>
+            </div> 
+      </div>
+  
+      
+      <div class="baby" id="baby1" >
+          <div class="card text-center">
+              <div class="card-header">
+                Total Orders
+              </div>
+              <div class="card-body">
+                  <p class="card-text"><br> <strong  style="font-size: 40px;">{{total_order}} </strong><br><br> @ ₦{{total_order_amount}} </p>
+              </div>
+          
+            </div> 
+      </div>
+  
+      </div>
+  {% endif %}
+
+
+
+
+{% endblock %}

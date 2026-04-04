@@ -1,0 +1,398 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior: smooth;">
+    <head lang="en">
+        
+        <title> {% block title %} {% endblock %}  Welcome | AgroServe</title>
+        <meta charset="utf-8">
+        <meta name="theme-color" content="#ffffff">
+        <meta name="viewport" content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+        <script src="https://unpkg.com/htmx.org@1.6.0"></script>
+
+         <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+         integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" 
+         crossorigin="anonymous"> -->
+
+
+        <link rel="stylesheet" href=" {% static 'site.css' %} ">
+
+        <link rel="stylesheet" href=" {% static 'ratingstar.css' %} ">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+        <!-- <link rel="stylesheet" href="{% static 'dist/all.min.css' %}">
+        <link rel="stylesheet" href="{% static 'dist/app.css' %}">  -->
+
+        <link rel="stylesheet" href="{% static 'font-awesome.min.css' %}">
+        
+
+
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="shortcut icon"    sizes="76x76"      href="{% static 'build/vatagro/76x76.png' %}    ">
+        <link rel="shortcut icon"    sizes="120x120"    href="{% static 'build/vatagro/120x120.png' %}  ">
+        <link rel="shortcut icon"    sizes="128x128"    href="{% static 'build/vatagro/128x128.png' %}  ">
+        <link rel="shortcut icon"    sizes="152x152"    href="{% static 'build/vatagro/152x152.png' %}  ">
+        <link rel="shortcut icon"    sizes="196x196"    href="{% static 'build/vatagro/196x196.png' %} ">
+        <link rel="shortcut icon"    sizes="256x256"    href="{% static 'build/vatagro/256x256.png' %} ">
+        <link rel="apple-touch-icon" sizes="76x76"   href="{% static 'build/vatagro/76x76.png  ' %}  ">
+        <link rel="apple-touch-icon" sizes="120x120" href="{% static 'build/vatagro/120x120.png' %} ">
+        <link rel="apple-touch-icon" sizes="128x128" href="{% static 'build/vatagro/128x128.png' %} ">
+        <link rel="apple-touch-icon" sizes="152x152" href="{% static 'build/vatagro/152x152.png' %} ">
+        <link rel="apple-touch-icon" sizes="196x196" href="{% static 'build/vatagro/196x196.png' %} ">
+        <link rel="apple-touch-icon" sizes="256x256" href="{% static 'build/vatagro/256x256.png' %} ">
+
+
+
+        <style>
+            input[type=number]::-webkit-inner-spin-button,
+            input[type=number]::-webkit-outer-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }           
+        </style>
+
+                                    </head>
+    <body>
+       
+        <header id="" class="bg-green-900">
+    <nav class="navbar navbar-expand-md navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <span class="sr-only">AgroServe</span>
+                <!-- MAIN PAGE LOGO -->
+                <img src=" {% static 'logo/VatAgro-wh.png' %}" class="cb__logo" style="width: 150px;padding: 10px;
+    transform: translate(10px, -6px);" alt="AgroServe Logo">
+            </a>
+            <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse"
+                    data-target="#navbarCollapse" aria-controls="navbarCollapse"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav">
+
+                </ul>
+                <ul class="navbar-nav ml-auto">
+
+                    <li class="nav-item" >                        
+                                      {% if request.user.is_staff %}
+
+                        <a class="btn btn-outline-light mb-3 mb-lg-0 px-lg-4 ml-lg-4"
+                           role="button" aria-haspopup="true" aria-expanded="false"         
+                           href="{% url 'myproducts' %} ">List your product</a>       
+                                         {% endif %}
+
+                    </li>
+                        {% if request.user.is_authenticated %}
+                        <li class="nav-item" >
+                            
+                            <a class="btn mb-0 btn-light text-black-50 mb-3 mb-lg-0 px-lg-4 ml-lg-4"
+                                role="button" aria-haspopup="true" aria-expanded="false"
+                                href="{% url 'logout' %}"> Logout</a>
+                         </li>
+                         {% else %}
+                    <li class="nav-item" >
+                       <a class="btn mb-0 btn-light text-black-50 mb-3 mb-lg-0 px-lg-4 ml-lg-4"
+                           role="button" aria-haspopup="true" aria-expanded="false"
+                           href=" {% url 'register' %}">Register</a>
+                    </li>
+
+
+
+                    <li class="nav-item" >
+                        <a class="btn mb-0 btn-light text-black-50 mb-3 mb-lg-0 px-lg-4 ml-lg-4"
+                           role="button" aria-haspopup="true" aria-expanded="false"
+                           href="{% url 'login' %}">Sign In</a>
+ </li>
+                           {% endif %}
+
+                          
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle widget-header pl-3 ml-3 " href="{% url 'checkout' %} " id="navbarDropdown" 
+                            role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-shopping-cart" aria-hidden="true" style="color: yellow;"></i>
+                                                        <span class="badge badge-pill badge-danger notify">  {{cart_count}} </span>
+
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{% url 'account' %} ">Account</a>
+                                {% if cart_count and request.user.Active_Shipping_Address %} 
+                                <a class="dropdown-item" href="{% url 'checkout' %} ">Cart/Checkout</a> 
+                                {% else %}
+                                <a class="dropdown-item" href="/">Cart/Checkout</a>
+                                {% endif %}
+                                <a class="dropdown-item" href="{% url 'purchasedproducts' %} "> Bought Products </a>
+                            </div>
+    
+                            
+                        </a> 
+                       </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+{% block content %}
+
+    <section class="sub-header">
+        <div class="container-fluid p-0">
+            <div class="b-stage">
+                <div class="b-stage__1 w-100">
+                    <div class="container flex-column justify-content-end d-flex pb-5 align-items-stretch" style="height: inherit">
+                        <h1 class="t-30 text-white mb-4 font-weight-bold">Find a product</h1>
+                        
+        <form class="search form-row bg-green p-2 br-2 mb-lg-5" method="post" enctype="multipart/form-data" action=" {% url 'product_details2' %}">
+           {% csrf_token %}
+    
+            <div class="form-group col mb-2 mb-lg-0 px-1">
+                <label for="product" class='sr-only'>
+                    Product
+                </label>
+            <select  class="form-control bg-white border-0" data-val="true" data-val-required="The ProductId field is required." id="prod" name="prod">       
+                <option value="">Products</option>
+{% for x in product_list %}
+<option value="{{x.pk }}"> {{x.product_name}} </option>
+{% endfor %}
+     </select>
+            </div>
+    
+            <div class="form-group col-15 col-lg-6 mb-2 mb-lg-0 px-1">
+                <label for="State" class='sr-only'>
+                    State
+                </label>
+ <select class="form-control bg-white border-0" data-val="true" data-val-required="The StateId field is required." id="StateId" name="StateId"><option value="">Locations</option>
+    <!-- <option value="149">ABIA</option>
+    <option value="185">ZAMFARA</option> -->
+    </select>
+            </div>
+    
+            <div class="form-group col-15 col-lg-6 mb-2 mb-lg-0 px-1">
+                <label for="Price" class='sr-only'>
+                    Price
+                </label>
+                <input class="form-control bg-white border-0" data-val="true" data-val-number="The field Price must be a number." data-val-required="The Price field is required." id="Price" name="Price" placeholder="Price" type="text" value="" />
+            </div>
+    
+            <button type="submit" class="btn btn-primary bg-green-800 mb-2 mb-lg-0 mx-2">
+                Search
+            </button>
+           
+        <input name="__RequestVerificationToken" type="hidden" value="CfDJ8NVAzMsJsYROi8ja4TMvrc6blcRWrEmvefsxkqtdYF9V0zI3_zQHr2QRDR88W29UbtmhkU7G41C4GSDa44ujvao3BP
+        hS70ldHge4uJjnCNaHGHb8yAT5Nu9b5qToGZ5WerqUQxz-pT27qp5cGooGMVg" /></form>
+    
+                       
+                    </div>
+                </div>
+                <div class="b-stage__overlay"></div>
+                <div style="" class="b-stage__image">
+                    <img src="{% static 'images/fold.jpg' %}" 
+                    srcset=" {% static 'images/fold.jpg' %} 1920w,{% static 'images/mobile.jpg' %} 1060w" alt="" 
+                    sizes="(max-width: 30em) 20em" 
+                    class="img-fluid w-100">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <section class="container pt-1 pb-4 mt-4">
+        <h3 class="section-h t-20 font-weight-bold">Browse by product type</h3>
+    
+        <div class="row">
+            <div class="summary owl-carousel owl-theme col-lg-30"
+                 data-carousel="true"
+                 data-mouse-drag="true"
+                 data-dots="true"
+                 data-loop="true"
+                 data-responsive='{"0": {"margin": 20, "items": 2},"600":{"margin": 20, "items": 3},"1000":{"items":5, "margin": 30}}'>
+                 {% for x in cat %}            
+                    <div class=''>
+                        <a href="{% url 'category' x.pk %}">
+                            <div class="">
+                                <img src="{{ x.cat_image.url }}"
+                                     height="768" width="1024"
+                                     alt="onion-Logo"
+                                     class="img-fluid w-100" />
+                                <h4 class="mb-0">{{ x.category_name }} </h4>
+                            </div> 
+                        </a>
+                    </div>
+                    {% endfor %} 
+            </div>
+        </div>
+    </section>
+    
+
+    <section class="container pt-1 pb-4 mt-4">
+        <h3 class="section-h t-20 font-weight-bold">Top Seller</h3>
+    
+        <div class="row">
+            <div class="summary owl-carousel owl-theme col-lg-30"
+                 data-carousel="true"
+                 data-mouse-drag="true"
+                 data-dots="true"
+                 data-responsive='{"0": {"margin": 20, "items": 2},"600":{"margin": 20, "items": 3},"1000":{"items":5, "margin": 30}}'>
+                 {% for x in seller %}            
+    
+                    <div class=''>
+                        <a href="/">
+                            <div class="">
+                         
+
+                                     <img src="https://dummyimage.com/150x150.gif?text={{ x.full_name }}" alt="" 
+                                      height="768" width="1024"
+                                      alt="Seller-Logo"
+                                      class="img-fluid w-100"
+                                     >
+                                <h4 class="mb-0">{{ x.first_name }} </h4>
+                                <span>  </span>
+                            </div> 
+                        </a>
+                    </div>
+                    {% endfor %} 
+            </div>
+        </div>
+    </section>
+    
+<div class="container py-4 mt-1 mb-5">
+    <h3 class="section-h t-20 font-weight-bold">Popular Locations</h3>
+    
+
+<div class="row justify-content-center">
+            <div class='col-lg-10 col-md-10 col-30'>
+            <a href="">
+    <div class="location position-relative text-white bg-green-800 br-2 mb-3 overflow-hidden">
+        <h4 class="position-absolute t-36 text-white font-weight-bold" style="bottom: 20px;left: 20px;z-index: 8">Plateau</h4>
+        <img
+                src='{% static "images/by_location/plateau.jpg" %}'
+                alt="plateau-Logo"
+                class="img-fluid w-100"
+                style="opacity: 0.7"
+        />
+    </div>
+</a>
+
+        </div>
+            <div class='col-lg-10 col-md-10 col-30'>
+            <a href="">
+    <div class="location position-relative text-white bg-green-800 br-2 mb-3 overflow-hidden">
+        <h4 class="position-absolute t-36 text-white font-weight-bold" style="bottom: 20px;left: 20px;z-index: 8">Ogun</h4>
+        <img
+                src='{% static "images/by_location/ogun.jpg" %}'
+                alt="ogun-Logo"
+                class="img-fluid w-100"
+                style="opacity: 0.7"
+        />
+    </div>
+</a>
+
+        </div>
+            <div class='col-lg-10 col-md-10 col-30'>
+            <a href="">
+    <div class="location position-relative text-white bg-green-800 br-2 mb-3 overflow-hidden">
+        <h4 class="position-absolute t-36 text-white font-weight-bold" style="bottom: 20px;left: 20px;z-index: 8">Zaria</h4>
+        <img
+                src='{% static "images/by_location/zaria.jpg" %}'
+                alt="zaria-Logo"
+                class="img-fluid w-100"
+                style="opacity: 0.7"
+        />
+    </div>
+</a>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<section class="py-5 bg-green-700 text-white">
+    <div class="container">
+        <div class="section-header mb-4">
+            <p class="text-center t-24 mb-0">Be the first to know</p>
+            <p class="text-center">
+                Sign up for alerts on the best deals, promos and other info
+            </p>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-18">
+                <form class="form-row justify-content-center">
+                    <div class="form-group mb-2 col-lg-18">
+                        
+<input type="" class="form-control bg-white border-0 w-100" id="email" value="" placeholder="Email Address"/>
+                    </div>
+                    <button type="submit" class="btn bg-vatagro-brown text-white mb-2">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<nav class="navbar link-white d-lg-block bg-light p-5">
+        <div class="container">
+            <div class="d-lg-flex justify-content-center justify-content-lg-between w-100">
+                <p class="t-24 mb-lg-0 text-color-vatagro-brown">List your products on Vatagro and reach thousands of buyers</p>
+                    <a href="{% url 'register' %}" class="btn btn-primary mb-0">Get Started</a>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+<footer class="footer py-3 bg-green-900" style="">
+    <div class="footer-bottom text-white bg-gray-dark">
+        <div class="container">
+            <div class="row">
+                <div class="col-30 col-lg-18 align-items-center d-flex">
+                    <span class="py-1 d-md-inline">
+                        &copy;2021 <span class="font-weight-bold">AgroServe</span> Powered by Vatebra
+                    </span>
+                </div>
+                <div class="col-30 col-lg-12 align-items-center justify-content-lg-end d-flex">
+                    <section class="py-2">
+                        <a href="#" class="p-3 pl-0 lh-0">
+                            <ion-icon name="logo-facebook" style="width: 1.5em;height: 1.5em"></ion-icon>
+                        </a><a href="#" class="p-3 lh-0">
+                            <ion-icon name="logo-twitter" style="width: 1.5em;height: 1.5em"></ion-icon>
+                        </a><a href="#" class="p-3 lh-0">
+                            <ion-icon name="logo-youtube" style="width: 1.5em;height: 1.5em"></ion-icon>
+                        </a><a href="#" class="p-3 lh-0">
+                            <ion-icon name="logo-linkedin" style="width: 1.5em;height: 1.5em"></ion-icon>
+                        </a>
+                    </section>
+
+                     <div class="">
+                    <a href="{% url 'admin:index' %} " class="btn bg-vatagro-brown text-white ">Portal Login</a>
+                      </div>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+</footer>
+        <span id="toTop" class="toTop" onclick="window.scrollTo({top: 0,left: 0,behavior: 'smooth'})">
+            <svg width="40" height="37" viewBox="0 0 40 37" fill="none" xmlns="http://www.w3.org/2000/svg" class="img-fluid">
+                <path d="M20 0.999999L39 15.6512M20 0.999999L0.999999 15.6512M20 0.999999L20 37" stroke="#FDFDFD"/>
+            </svg>
+        </span>            <script async src="{% static 'site.bundle.js' %}"></script>
+        <script aysnc src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
+    </body>
+</html>

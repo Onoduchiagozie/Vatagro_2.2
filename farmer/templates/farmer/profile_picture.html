@@ -1,0 +1,13 @@
+{% extends 'farmer/account.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h3 class="title-divider" style="margin-bottom: 0;"><span>Profile Picture</span></h3>
+<div class="lead" style="margin-bottom: 40px;">
+    <form class="form-control" method="post" enctype="multipart/form-data" >{% csrf_token %}
+        {{ form|crispy }}
+        <input type="submit" value="Upload">
+    </form>
+</div>
+
+{% endblock %}

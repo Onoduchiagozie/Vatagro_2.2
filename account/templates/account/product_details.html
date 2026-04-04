@@ -1,0 +1,186 @@
+{% extends 'account/index.html' %}
+
+
+{% block content %}
+<div class="container py-5">
+    <section class="row justify-content-around">
+        <div class="col-lg-20">
+            <div class="row">
+                <div class="col-lg-16">
+
+                    <div class="summary owl-carousel owl-theme col-lg-30"
+                         data-carousel="true"
+                         data-mouse-drag="true"
+                         data-dots="true"
+                         data-loop="false"
+                         data-responsive='{"0": {"margin": 0, "items": 1},"600":{"margin": 0, "items": 1},"1000":{"items":1, "margin": 0}}'>
+
+                            <!-- SPACE FOR PRODUCT TO HAVE MULTIPLE IMAGES -->
+
+                            <img src=" {{ product.prod_image.url }} " class="img-fluid" alt="" style="width:482px;height:416px">
+
+                    </div>
+                </div>
+                <div class="col-lg-14">
+
+                  <strong><span>Merchant {{ product.farmername}} </span></strong>
+                    <br>
+         
+
+
+
+                    <div class="rating_star">      
+                        <span>
+                        <i class="fa fa-star{% if product.average_review < 0.5 %}-o{% elif product.average_review >= 0.5 and product.average_review < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
+                        <i class="fa fa-star{% if product.average_review < 1.5 %}-o{% elif product.average_review >= 1.5 and product.average_review < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
+                        <i class="fa fa-star{% if product.average_review < 2.5 %}-o{% elif product.average_review >= 2.5 and product.average_review < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
+                        <i class="fa fa-star{% if product.average_review < 3.5 %}-o{% elif product.average_review >= 3.5 and product.average_review < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
+                        <i class="fa fa-star{% if product.average_review < 4.5 %}-o{% elif product.average_review >= 4.5 and product.average_review < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
+                    </span>
+                    </div>
+
+
+                    <h1>{{product.product_name}} </h1>
+                    <p>Information</p>
+                    <p>
+                        <!-- get  selected store location object STATE CITY STORENAME -->
+                        The Product is located in {{ product.store_location.states }} state and the nearest location to the pickup
+                        is {{ product.store_location.city }}, near {{ product.store_location.name }}. Kindly note that the merchant has attested the products are as displayed.
+
+
+                    </p>
+
+                    <div class="form-row py-2 ">
+                        <div class="col">
+                            <p name="" id="unit" class="form-control" style="font-size:large;font-weight:bolder">
+                                ₦{{ product.price }}
+                            </p>
+                        </div>
+                        <div class="col">
+                            <p name="" id="unit" class="form-control" style="font-size:large;font-weight:bolder">
+                                Per {{ product.measurment }}
+                            </p>
+                        </div>
+                    </div>
+                        <p> Available in Stock : <span style="color:green;font-weight:bolder"> {{product.stock}} </span></p>
+
+                        {% if incart %} 
+
+                        <a href="{% url 'checkout' %} " 
+                           class="btn btn-block btn-primary my-4 mb-lg-0 text-uppercase text-center w-100 "
+                           style="color:white">
+                           Added (View Cart)  <i class="fa fa-eye" ></i>   
+                        </a>
+
+                        {% else %}
+
+                        <a href="{% url 'addcart2' product.id %} " id="cart_mode"
+                        class="btn btn-block btn-primary my-4 mb-lg-0 text-uppercase text-center w-100 "
+                        style="color:white" onclick="show()" >
+                            Add To Cart
+                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                     </a>
+                     {% endif %}
+
+
+
+
+                </div>
+
+            </div>
+            <div class="py-5">
+                <h3>Full Description</h3>
+                <p>
+                    {{ product.product_description }}
+                </p>
+
+                <form action="{% url 'submit_review' product.pk %}" method="POST">
+                    {% csrf_token  %}
+                    <h5>Write Your Review</h5> 
+                    <div>
+                       <label> How do you rate this product</label> <br>
+                       <div class="rate">
+                                    <input type="radio" name="rating" id="rating10"value="5" required> <label   for="rating10"title="5"></label>
+                                    <input type="radio" name="rating" id="rating9" value="4.5" required><label  for="rating9" title="4.5" class="half" ></label>
+                                    <input type="radio" name="rating" id="rating8" value="4" required><label    for="rating8" title="4"></label>
+                                    <input type="radio" name="rating" id="rating7" value="3.5" required><label  for="rating7" title="3.5" class="half"></label>
+                                    <input type="radio" name="rating" id="rating6" value="3" required><label    for="rating6" title="3"></label>
+                                    <input type="radio" name="rating" id="rating5" value="2.5" required><label  for="rating5" title="2.5" class="half"></label>
+                                    <input type="radio" name="rating" id="rating4" value="2" required><label    for="rating4" title="2"></label>
+                                    <input type="radio" name="rating" id="rating3" value="1.5" required><label  for="rating3" title="1.5" class="half"></label>
+                                    <input type="radio" name="rating" id="rating2" value="1" required><label    for="rating2" title="1"></label>
+                                    <input type="radio" name="rating" id="rating1" value="0.5" required><label  for="rating1" title="0.5" class="half"></label>
+                       </div>
+<br>
+                Review    
+                 <textarea class="form-control" name="review" id="" rows="5" cols="50" ></textarea>
+                <br>
+                {% if user.is_authenticated %}
+                <input type="submit"  class="btn btn-primary" value="Submit Review">
+                {% else %}
+                <p><a href=" {% url 'login' %} ">Login To Submit Review</a></p>
+                {% endif %}
+                                    </div>         
+                            </form>
+
+            </div>
+
+            <section class="">
+            </section>
+        </div>
+        <div class="col-lg-6">
+            <h4 class="t-16 text-uppercase font-weight-bold text-color-vatagro-brown">Customers Review</h4>       
+            <hr>  
+
+            {% if messages %}
+            {% for message in messages %}
+                <div class="text-center alert alert-{{ message.tags }}">
+                    {{ message|safe }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    
+{% for x in review %}
+           
+            <div>
+                <div class="deal mb-3">
+                {{x.review}}
+                </div>
+                    <div class="rating_star">      
+                    <span>
+
+                    <i class="fa fa-star{% if x.rating == 0.5 %}-half-o{% elif x.rating < 1 %}-o {% endif %}" aria-hidden="true"></i>
+                    <i class="fa fa-star{% if x.rating == 1.5 %}-half-o{% elif x.rating < 2 %}-o {% endif %}" aria-hidden="true"></i>
+                    <i class="fa fa-star{% if x.rating == 2.5 %}-half-o{% elif x.rating < 3 %}-o {% endif %}" aria-hidden="true"></i>
+                    <i class="fa fa-star{% if x.rating == 3.5 %}-half-o{% elif x.rating < 4 %}-o {% endif %}" aria-hidden="true"></i>
+                    <i class="fa fa-star{% if x.rating == 4.5 %}-half-o{% elif x.rating < 5 %}-o {% endif %}" aria-hidden="true"></i>
+                </span>
+                </div>
+
+                <div><strong> {{x.user.full_name}} </strong></div>
+                <i>{{x.created_date}} </i>
+                
+            
+
+                    
+            </div> <hr>
+
+            {% empty %} <p style="font-size: large;"> <i> Be The First To Review 📝 </i></p>
+{% endfor %}
+        </div>
+    </section>
+
+
+</div>
+
+<script>
+    function show() {
+        const button=document.getElementById('cart_mode')
+        button.innerHTML=' Added (View Cart items)  <i class="fa fa-eye" ></i>  ' 
+                    
+
+        
+    }
+</script>
+
+{% endblock %}
